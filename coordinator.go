@@ -92,3 +92,26 @@ func (p *Participant) VerifySignatureShare(
 
 	return l.Equal(r) == 1
 }
+
+func (p *Participant) ComputeChallenge(
+	commitment *Commitment,
+	pki *group.Element,
+	sigShareI *group.Scalar,
+	coms CommitmentList,
+	msg []byte,
+) *group.Scalar {
+	if !coms.IsSorted() {
+		panic("list not sorted")
+	}
+
+	// Compute Binding Factor(s)
+	bindingFactorList := p.computeBindingFactors(coms, msg)
+
+	// Compute Group Commitment
+	groupCommitment := p.computeGroupCommitment(coms, bindingFactorList)
+
+	// Compute the challenge
+	challenge := challenge(p.Ciphersuite, groupCommitment, p.Configuration.GroupPublicKey, msg)
+
+	return challenge
+}
