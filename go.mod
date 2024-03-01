@@ -1,4 +1,4 @@
-module github.com/bytemare/frost
+module github.com/jaydenwindle/frost
 
 go 1.21
 
