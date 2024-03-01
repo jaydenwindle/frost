@@ -94,9 +94,6 @@ func (p *Participant) VerifySignatureShare(
 }
 
 func (p *Participant) ComputeChallenge(
-	commitment *Commitment,
-	pki *group.Element,
-	sigShareI *group.Scalar,
 	coms CommitmentList,
 	msg []byte,
 ) *group.Scalar {
